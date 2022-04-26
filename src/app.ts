@@ -1,8 +1,11 @@
-import express from 'express'
+import express, { Express } from 'express'
 import { appRouter } from 'shared/http/routes'
 
-const app = express()
+async function setupApp(): Promise<Express> {
+  const app = express()
 
-app.use('/v1', appRouter)
+  app.use('/v1', appRouter)
 
-export { app }
+  return app
+}
+export { setupApp }

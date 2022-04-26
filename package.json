@@ -6,7 +6,7 @@
   "author": "Uriel Mori",
   "license": "ISC",
   "scripts": {
-    "start:dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --no-notify src/server.ts",
+    "start:dev": "env-cmd -f ./.env ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --no-notify src/server.ts",
     "lint": "eslint 'src/**/*.ts'",
     "precommit": "lint-staged && yarn lint",
     "prepare": "husky install"
@@ -32,6 +32,7 @@
     "typescript": "^4.6.3"
   },
   "dependencies": {
+    "env-cmd": "^10.1.0",
     "express": "^4.18.0",
     "fastify": "^3.28.0"
   }
