@@ -8,6 +8,7 @@ import {
 
 export interface IAccountRepository {
   create(account: IAccount): Promise<IAccountDocument>
+  findByID(id: string): Promise<IAccountDocument | undefined | null>
 }
 
 export class AccountRepository implements IAccountRepository {
@@ -23,5 +24,9 @@ export class AccountRepository implements IAccountRepository {
 
   async create(account: IAccount): Promise<IAccountDocument> {
     return this.accountRespoitory.create(account)
+  }
+
+  async findByID(id: string): Promise<IAccountDocument | undefined | null> {
+    return this.accountRespoitory.findById(id)
   }
 }

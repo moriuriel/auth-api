@@ -12,5 +12,6 @@ appRouter.get('/', handlerMainRouter)
 const accountController = new AccountController()
 
 appRouter.post('/accounts', accountController.create)
+appRouter.get('/accounts/:id', accountController.findByID)
 
 export { appRouter }
