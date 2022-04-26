@@ -4,5 +4,6 @@ export default {
   dbName: process.env.DB_NAME,
   dbUser: process.env.DB_USER,
   dbPass: process.env.DB_PASS,
+  dbUri: String(process.env.DB_URI),
   appPort: process.env.PORT
 }
