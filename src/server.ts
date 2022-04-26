@@ -1,6 +1,7 @@
 import { setupApp } from 'app'
 import { connect } from 'shared/infra/database/mongoose'
 import configEnv from 'shared/infra/config/env'
+import logger from 'shared/infra/config/logger'
 
 async function main() {
   const app = await setupApp()
@@ -8,7 +9,7 @@ async function main() {
   await connect()
 
   app.listen(configEnv.appPort, () =>
-    console.log(`AUTH API is running on port ${configEnv.appPort} 🔒`)
+    logger.info(`AUTH API is running on port ${configEnv.appPort} 🔒`)
   )
 }
 
