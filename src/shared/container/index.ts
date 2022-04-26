@@ -1,1 +1,2 @@
 import './Repositories'
+import './Providers'

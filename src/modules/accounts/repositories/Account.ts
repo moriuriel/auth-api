@@ -9,6 +9,7 @@ import {
 export interface IAccountRepository {
   create(account: IAccount): Promise<IAccountDocument>
   findByID(id: string): Promise<IAccountDocument | undefined | null>
+  findByEmail(email: string): Promise<IAccountDocument | undefined | null>
 }
 
 export class AccountRepository implements IAccountRepository {
@@ -28,5 +29,11 @@ export class AccountRepository implements IAccountRepository {
 
   async findByID(id: string): Promise<IAccountDocument | undefined | null> {
     return this.accountRespoitory.findById(id)
+  }
+
+  async findByEmail(
+    email: string
+  ): Promise<IAccountDocument | null | undefined> {
+    return this.accountRespoitory.findOne({ email })
   }
 }

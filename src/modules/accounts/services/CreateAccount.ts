@@ -1,3 +1,6 @@
+import { StatusCodes } from 'http-status-codes'
+import { AppError } from 'shared/errors'
+import { IHashProvider } from 'shared/providers'
 import { inject, injectable } from 'tsyringe'
 import { IAccountRepository } from '../repositories/Account'
 import { IAccount } from '../schemas/Account'
@@ -6,10 +9,30 @@ import { IAccount } from '../schemas/Account'
 export class CreateAccountService {
   constructor(
     @inject('AccountRepository')
-    private readonly accountRepository: IAccountRepository
+    private readonly accountRepository: IAccountRepository,
+
+    @inject('BCrptyHashProvider')
+    private hashProvider: IHashProvider
   ) {}
 
-  async execute(account: IAccount) {
-    return this.accountRepository.create(account)
+  async execute({ email, name, password }: IAccount) {
+    const user = await this.accountRepository.findByEmail(email)
+
+    const isUniqueEmail = !!user
+
+    if (isUniqueEmail) {
+      throw new AppError({
+        statusCode: StatusCodes.UNPROCESSABLE_ENTITY,
+        message: 'Email already exists'
+      })
+    }
+
+    const hashedPassword = await this.hashProvider.generateHash(password)
+
+    return this.accountRepository.create({
+      name,
+      email,
+      password: hashedPassword
+    })
   }
 }
