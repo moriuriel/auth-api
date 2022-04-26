@@ -1,0 +1,39 @@
+version: '3'
+networks:
+  auth:
+    external: true
+services:
+  app:
+    container_name: 'auth-service'
+    image: node:lts
+    working_dir: /usr/src/app
+    restart: always
+    command: yarn start:dev
+    ports:
+      - '${PORT}:${PORT}'
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      - PORT=${PORT}
+    networks:
+      - auth
+    depends_on:
+      - mongo
+    links:
+      - mongo
+  mongo:
+    container_name: 'auth-dev-db'
+    image: mongo
+    restart: always
+    command: mongod --port ${DB_PORT}
+    ports:
+      - '${DB_PORT}:${DB_PORT}'
+    volumes:
+      - ./.docker/db/mongodb:/data/db
+      - ./.docker/db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: '${DB_USER}'
+      MONGO_INITDB_ROOT_PASSWORD: '${DB_PASS}'
+      MONGO_INITDB_DATABASE: '${DB_NAME}'
+    networks:
+      - auth
