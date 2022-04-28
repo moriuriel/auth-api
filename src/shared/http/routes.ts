@@ -1,5 +1,5 @@
 import Router, { Request, Response } from 'express'
-import { AccountController } from 'modules/accounts/controllers/Account'
+import { accountRouter } from 'modules/accounts/routes/accounts.routes'
 
 const appRouter = Router()
 
@@ -9,9 +9,6 @@ const handlerMainRouter = async (_: Request, response: Response) => {
 
 appRouter.get('/', handlerMainRouter)
 
-const accountController = new AccountController()
-
-appRouter.post('/accounts', accountController.create)
-appRouter.get('/accounts/:id', accountController.findByID)
+appRouter.post('/accounts', accountRouter)
 
 export { appRouter }
