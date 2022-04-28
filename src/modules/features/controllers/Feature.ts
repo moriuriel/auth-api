@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { container } from 'tsyringe'
-import { CreateFeatureService } from '../services/CreateFeature'
+import { CreateFeatureService } from '../services'
 
 export class FeatureController {
   async create(request: Request, response: Response): Promise<Response> {

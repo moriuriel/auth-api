@@ -32,7 +32,6 @@ export class CreateAccountService {
     }
 
     const defaultFeatures = await this.featureRepository.findDefaultFeatures()
-    console.log(defaultFeatures)
 
     const hashedPassword = await this.hashProvider.generateHash(password)
 
@@ -42,7 +41,7 @@ export class CreateAccountService {
       password: hashedPassword,
       active: true,
       confirmed: false,
-      features: defaultFeatures?.map((feature) => feature.id)
+      features: defaultFeatures?.map((feature) => feature.name)
     })
   }
 }

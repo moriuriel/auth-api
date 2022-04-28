@@ -1,4 +1,4 @@
-import { model, Model } from 'mongoose'
+import { model, Model, Types } from 'mongoose'
 
 import {
   IAccountDocument,
@@ -10,6 +10,7 @@ export interface IAccountRepository {
   create(account: IAccount): Promise<IAccountDocument>
   findByID(id: string): Promise<IAccountDocument | undefined | null>
   findByEmail(email: string): Promise<IAccountDocument | undefined | null>
+  update(id: string, account: IAccount): Promise<any>
 }
 
 export class AccountRepository implements IAccountRepository {
@@ -35,5 +36,15 @@ export class AccountRepository implements IAccountRepository {
     email: string
   ): Promise<IAccountDocument | null | undefined> {
     return this.accountRespoitory.findOne({ email })
+  }
+
+  async update(id: string, account: IAccount): Promise<any> {
+    return this.accountRespoitory.findByIdAndUpdate(
+      { _id: new Types.ObjectId(id) },
+      account,
+      {
+        new: true
+      }
+    )
   }
 }

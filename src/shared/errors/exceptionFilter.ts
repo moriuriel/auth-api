@@ -27,7 +27,7 @@ function exceptionFilter(
 
   return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     status: 'error',
-    massage: 'Internal server Error',
+    massage: err,
     code: StatusCodes.INTERNAL_SERVER_ERROR
   })
 }

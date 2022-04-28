@@ -1,11 +1,15 @@
 import Router from 'express'
-import { AccountController } from 'modules/accounts/controllers/Account'
+import {
+  AccountController,
+  ConfirmAccountController
+} from 'modules/accounts/controllers'
 import { validateRequestData } from 'shared/middleware'
 import { CreateAccountDto } from '../dtos'
 
 const accountRouter = Router()
 
 const accountController = new AccountController()
+const confirmAccountController = new ConfirmAccountController()
 
 accountRouter.post(
   '/',
@@ -13,5 +17,6 @@ accountRouter.post(
   accountController.create
 )
 accountRouter.get('/:id', accountController.findByID)
+accountRouter.patch('/confirm', confirmAccountController.create)
 
 export { accountRouter }
