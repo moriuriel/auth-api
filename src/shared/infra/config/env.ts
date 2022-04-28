@@ -5,5 +5,6 @@ export default {
   dbUser: process.env.DB_USER,
   dbPass: process.env.DB_PASS,
   dbUri: String(process.env.DB_URI),
-  appPort: process.env.PORT
+  appPort: process.env.PORT,
+  secret: String(process.env.JWT_SECRET)
 }
