@@ -32,7 +32,9 @@ export class CreateAccountService {
     return this.accountRepository.create({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      active: true,
+      confirmed: false
     })
   }
 }
