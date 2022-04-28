@@ -10,7 +10,12 @@ export const AccountSchema = new mongoose.Schema(
     },
     password: { type: String, required: true },
     confirmed: { type: Boolean, default: false, required: true },
-    active: { type: Boolean, default: true, required: true }
+    active: { type: Boolean, default: true, required: true },
+    features: [
+      {
+        type: String
+      }
+    ]
   },
   { timestamps: true }
 )
@@ -21,6 +26,7 @@ export interface IAccount {
   password: string
   confirmed?: boolean
   active?: boolean
+  features?: String[]
 }
 
 export interface IAccountDocument extends IAccount, Document {}

@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer'
-import { IsNotEmpty, IsString } from 'class-validator'
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator'
 
 export class CreateFeatureDto {
   @IsNotEmpty()
@@ -11,4 +11,9 @@ export class CreateFeatureDto {
   @IsString()
   @Expose()
   description!: string
+
+  @IsNotEmpty()
+  @IsBoolean()
+  @Expose()
+  is_default!: boolean
 }

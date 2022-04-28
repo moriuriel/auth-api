@@ -5,13 +5,14 @@ import { CreateFeatureService } from '../services/CreateFeature'
 
 export class FeatureController {
   async create(request: Request, response: Response): Promise<Response> {
-    const { name, description } = request.body
+    const { name, description, is_default } = request.body
 
     const createFeatureService = container.resolve(CreateFeatureService)
 
     const feature = await createFeatureService.execute({
       name,
-      description
+      description,
+      is_default
     })
 
     return response.status(StatusCodes.CREATED).json({ feature })

@@ -1,4 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
+import { IFeatureRepository } from 'modules/features/repositories/Feature'
 import { AppError } from 'shared/errors'
 import { IHashProvider } from 'shared/providers'
 import { inject, injectable } from 'tsyringe'
@@ -12,7 +13,10 @@ export class CreateAccountService {
     private readonly accountRepository: IAccountRepository,
 
     @inject('BCrptyHashProvider')
-    private hashProvider: IHashProvider
+    private hashProvider: IHashProvider,
+
+    @inject('FeatureRepository')
+    private readonly featureRepository: IFeatureRepository
   ) {}
 
   async execute({ email, name, password }: IAccount) {
@@ -27,6 +31,9 @@ export class CreateAccountService {
       })
     }
 
+    const defaultFeatures = await this.featureRepository.findDefaultFeatures()
+    console.log(defaultFeatures)
+
     const hashedPassword = await this.hashProvider.generateHash(password)
 
     return this.accountRepository.create({
@@ -34,7 +41,8 @@ export class CreateAccountService {
       email,
       password: hashedPassword,
       active: true,
-      confirmed: false
+      confirmed: false,
+      features: defaultFeatures?.map((feature) => feature.id)
     })
   }
 }
