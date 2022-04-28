@@ -9,6 +9,6 @@ const handlerMainRouter = async (_: Request, response: Response) => {
 
 appRouter.get('/', handlerMainRouter)
 
-appRouter.post('/accounts', accountRouter)
+appRouter.use('/accounts', accountRouter)
 
 export { appRouter }
