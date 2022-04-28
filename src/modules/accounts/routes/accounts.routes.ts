@@ -5,6 +5,7 @@ import {
   SessionController
 } from 'modules/accounts/controllers'
 import { validateRequestData } from 'shared/middleware'
+import ensureAuthenticated from 'shared/middleware/ensureAuthenticated'
 import { CreateAccountDto } from '../dtos'
 
 const accountRouter = Router()
@@ -18,8 +19,9 @@ accountRouter.post(
   validateRequestData(CreateAccountDto),
   accountController.create
 )
-accountRouter.get('/:id', accountController.findByID)
+accountRouter.post('/session', sessionController.index)
 accountRouter.patch('/confirm', confirmAccountController.create)
 
-accountRouter.post('/session', sessionController.index)
+accountRouter.get('/:id', ensureAuthenticated, accountController.findByID)
+
 export { accountRouter }

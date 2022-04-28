@@ -16,7 +16,7 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "no-unused-vars": "error",
+        "no-unused-vars": "warn",
         "camelcase": "off",
         "no-useless-constructor": "off"
     }
