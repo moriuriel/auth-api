@@ -10,7 +10,7 @@ interface ITokenPayload {
   sub: string
 }
 
-export default function ensureAuthenticated(
+export function ensureAuthenticated(
   request: Request,
   _: Response,
   next: NextFunction

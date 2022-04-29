@@ -4,8 +4,11 @@ import {
   ConfirmAccountController,
   SessionController
 } from 'modules/accounts/controllers'
-import { validateRequestData } from 'shared/middleware'
-import ensureAuthenticated from 'shared/middleware/ensureAuthenticated'
+import {
+  validateRequestData,
+  can,
+  ensureAuthenticated
+} from 'shared/middleware'
 import { CreateAccountDto } from '../dtos'
 
 const accountRouter = Router()
@@ -22,6 +25,11 @@ accountRouter.post(
 accountRouter.post('/session', sessionController.index)
 accountRouter.patch('/confirm', confirmAccountController.create)
 
-accountRouter.get('/:id', ensureAuthenticated, accountController.findByID)
+accountRouter.get(
+  '/:id',
+  ensureAuthenticated,
+  can(['account:findById']),
+  accountController.findByID
+)
 
 export { accountRouter }

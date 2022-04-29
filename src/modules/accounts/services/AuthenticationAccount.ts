@@ -39,6 +39,15 @@ export class AuthenticationAccountService {
       })
     }
 
+    const isActiveAccount = !account.confirmed || !account.active
+
+    if (isActiveAccount) {
+      throw new AppError({
+        message: 'Account not confirmed/active',
+        statusCode: StatusCodes.UNAUTHORIZED
+      })
+    }
+
     const matchedPassword = await this.hashProvider.compareHash(
       password,
       account.password
